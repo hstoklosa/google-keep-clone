@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
+
+
+/* Query Selectors */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #F1F3F5;
+}
+
+button,
+input,
+textarea {
+    background: none;
+    border: none;
+    outline: none;
+    resize: none;
+    font-family: inherit;
+}
+
+/* Application */
+
+header .container {
+    min-height: 20vh;
+}
+
+header .container.flex {
+    flex-direction: column;
+}
+
+.logos {
+    width: 200px;
+}
+
+.logos.flex {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logos img {
+    height: 100%;
+    width: 60px;
+}
+
+.plus {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+main .container {
+    position: relative;
+}
+
+.note-input {
+    position: relative;
+    width: 600px;
+    max-width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: .5rem;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+    margin: 2rem 0;
+    padding: 1rem;
+}
+
+.note-input.flex {
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.note-input input, textarea {
+    width: 90%;
+    font-size: 1rem;
+    margin: .5rem;
+    transition: max-height .5s ease;
+}
+
+.note-input textarea {
+    margin: 0 .5rem;
+    max-height: 0;
+}
+
+.note-input.active textarea {
+    max-height: 500px;
+}
+
+.note-input input::placeholder, textarea::placeholder {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.submit-btn,
+.exit-btn,
+.edit-btn,
+.remove-btn {
+    position: absolute;
+    top: 40px;
+    right: -25px;
+    width: 50px;
+    height: 50px;
+    padding: .5rem;
+    border-radius: 50%;
+    background-color: #42b883;
+    cursor: pointer;
+    transition: all .2s linear;
+}
+
+.submit-btn:hover,
+.exit-btn:hover,
+.edit-btn:hover,
+.remove-btn:hover {
+    filter: brightness(.95);
+}
+
+.submit-btn span,
+.edit-btn span,
+.remove-btn span {
+    display: inline-block;
+    line-height: 1.4rem;
+    font-size: 2.3rem;
+    color: #fff;
+}
+
+.note {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: .5rem;
+    width: 100%;
+    height: 180px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all .1s linear;
+}
+
+.note h2, p {
+    overflow: hidden;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+}
+
+.note p {
+    height: 114px;
+    word-break: break-word;
+}
+
+.note:hover {
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, .1);
+}
+
+.note:active {
+    transform: scale(1.05);
+}
+
+body.edit {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body.edit header,
+body.edit main {
+    display: none;
+}
+
+body.edit .edit-section {
+    display: flex;
+}
+
+.edit-section {
+    position: relative;
+    display: none;
+}
+
+.edit-section .exit-btn {
+    top: -25px;
+}
+
+.edit-section .edit-btn {
+    top: 275px;
+    right: 300px;
+}
+
+.edit-section .remove-btn {
+    top: 275px;
+    right: 220px;
+}
+
+.exit-btn div  {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.exit-btn div::before, .exit-btn div::after {
+    content: '';
+    position:absolute;
+    width: 20px;
+    height: 3px;
+    background-color: #fff;
+}
+
+.exit-btn div::before {
+    transform: rotate(45deg);
+}
+
+.exit-btn div::after {
+    transform: rotate(135deg);
+}
+
+.edit-section .note-input {
+    height: 300px;
+}
+
+.edit-section .note-input.flex {
+    justify-content: flex-start;
+}
+
+.edit-section .note-input textarea {
+    margin: .5rem;
+    max-height: 500px;
+}
+
+/* Utilities */
+
+.container {
+    max-width: 1300px;
+    padding: 2rem;
+    margin: 0 auto;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    grid-gap: 1rem;
+}
