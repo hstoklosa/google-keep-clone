@@ -8,21 +8,7 @@ export default class databaseHandler {
         return database.val();
     }
 
-    setData(id, title, content) {
-        db.ref('notes/' + id).set({
-            title: title,
-            content: content
-        }, (error) => {
-            if (error) {
-                console.error(error);
-            } else {
-                console.log('Data saved succesfully!');
-            }
-        });
+    async updateData(data) {
+        return await db.ref('notes/').set(data);
     }
-
-    updateData(data) {
-        db.ref('notes/').set(data);
-    }
-
 }

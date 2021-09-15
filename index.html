@@ -19,8 +19,9 @@
                 <img src="./assets/firebase-logo.png" alt="Firebase Logo">
             </div>
             <form class="note-input flex" tabindex="0">
-                <input type="text" name="note-title" id="note-title" placeholder="Title">
-                <textarea name="note-content" id="note-content" placeholder="Take a note..."></textarea>
+                <input type="text" name="note-title" id="note-title" placeholder="Title" autocomplete="off">
+                <textarea name="note-content" id="note-content" placeholder="Take a note..."
+                    autocomplete="off"></textarea>
                 <button type="submit" class="submit-btn flex">
                     <span>+</span>
                 </button>
@@ -36,8 +37,8 @@
     <div class="edit-section">
         <div class="close"></div>
         <form class="note-input flex">
-            <input type="text" name="note-title" id="edit-title" placeholder="Title">
-            <textarea name="note-content" id="edit-content" placeholder="Take a note..."></textarea>
+            <input type="text" name="note-title" id="edit-title" placeholder="Title" autocomplete="off">
+            <textarea name="note-content" id="edit-content" placeholder="Take a note..." autocomplete="off"></textarea>
             <button class="exit-btn">
                 <div></div>
             </button>

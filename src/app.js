@@ -6,49 +6,41 @@ const dbHandler = new databaseHandler();
 
 const titleInput = document.getElementById('note-title');
 const contentInput = document.getElementById('note-content');
+const editTitle = document.getElementById('edit-title');
+const editContent = document.getElementById('edit-content');
 const noteInput = document.querySelector('.note-input');
 const noteSection = document.querySelector('.note-section');
 
 
-const fetchNotes = () => {
-    noteSection.innerHTML = '';
+
+const fetchNotes = async () => {
+    const data = await dbHandler.getData();
+
     noteInput.reset();
+    noteSection.innerHTML = '';
 
-    dbHandler.getData()
-        .then(res => Object.values(res))
-        .then(data => {
-
-            if (data) {
-                data.forEach(note => {
-                    noteSection.innerHTML += UI.createNote(note.title, note.content);
-                });
-
-                document.querySelectorAll('.note').forEach((note, idx) => {
-                    note.addEventListener('click', () => {
-                        editNote(note, idx);
-                    });
-                });
-            }
+    if (data) {
+        data.forEach(note => {
+            noteSection.innerHTML += UI.createNote(note.title, note.content);
         });
+
+        const notes = document.querySelectorAll('.note');
+        notes.forEach((note, idx) => {
+            note.addEventListener('click', () => {
+                editNote(note, idx);
+            });
+        });
+    }
 }
 
 const createNote = async () => {
-    const fetchData = await dbHandler.getData();
-    const data = Object.values(fetchData);
-
     if (titleInput.value || contentInput.value) {
-        data.push({
-            title: titleInput.value,
-            content: contentInput.value
-        });
-        dbHandler.updateData(data);
+        updateData('create')
+            .then(() => fetchNotes());
     }
-    fetchNotes();
 }
 
 const editNote = (note, idx) => {
-    const editTitle = document.getElementById('edit-title');
-    const editContent = document.getElementById('edit-content');
     const exitBtn = document.querySelector('.exit-btn');
     const editBtn = document.querySelector('.edit-btn');
     const removeBtn = document.querySelector('.remove-btn')
@@ -59,38 +51,61 @@ const editNote = (note, idx) => {
     editContent.value = content;
 
     editBtn.addEventListener('click', (e) => {
-        dbHandler.getData()
-            .then(response => Object.values(response))
-            .then(data => {
-                data[idx].title = editTitle.value;
-                data[idx].content = editContent.value;
-
-                dbHandler.updateData(data);
-            });
+        updateData('edit', idx)
+            .then(() => reload());
+        e.preventDefault();
     });
 
     removeBtn.addEventListener('click', (e) => {
-        dbHandler.getData()
-            .then(response => Object.values(response))
-            .then(data => {
-                data.splice(idx, 1);
-                dbHandler.updateData(data);
-            });
+        updateData('remove', idx)
+            .then(() => reload());
+        e.preventDefault();
     });
 
     exitBtn.addEventListener('click', (e) => {
-        e.preventDefault();
         document.body.classList.remove('edit');
+        e.preventDefault();
     });
 
     document.body.classList.add('edit');
 }
 
+const updateData = async (action, idx) => {
+    let data = await dbHandler.getData();
+
+    switch (action) {
+        case 'create':
+            if (!data) data = [];
+
+            data.push({
+                title: titleInput.value,
+                content: contentInput.value
+            });
+
+            break;
+        case 'edit':
+            data[idx].title = editTitle.value;
+            data[idx].content = editContent.value;
+            break;
+        case 'remove':
+            data.splice(idx, 1);
+            break;
+        default:
+            break;
+    }
+
+    return dbHandler.updateData(data);
+}
+
+const reload = () => {
+    return window.location.reload();
+}
 
 window.addEventListener('load', () => fetchNotes());
 
 noteInput.addEventListener('submit', (e) => {
-    e.preventDefault(); createNote();
+    createNote();
+    e.preventDefault();
 });
 
 [titleInput, contentInput].forEach(input => {
