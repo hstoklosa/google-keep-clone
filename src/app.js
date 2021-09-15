@@ -12,7 +12,6 @@ const noteInput = document.querySelector('.note-input');
 const noteSection = document.querySelector('.note-section');
 
 
-
 const fetchNotes = async () => {
     const data = await dbHandler.getData();
 
@@ -81,7 +80,6 @@ const updateData = async (action, idx) => {
                 title: titleInput.value,
                 content: contentInput.value
             });
-
             break;
         case 'edit':
             data[idx].title = editTitle.value;
